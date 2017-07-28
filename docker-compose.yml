@@ -1,4 +1,10 @@
-version: '3'
+version: '2'
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          gateway: 172.28.0.1
 services:
   apiserver:
     image:
@@ -8,4 +14,12 @@ services:
       - "apiserver"
       - "--etcd-servers=http://127.0.0.1:2379"
       - "--service-cluster-ip-range=10.101.0.0/16"
+  etcd:
+    image: quay.io/coreos/etcd
+    networks:
+      default:
+        ipv4_address: 172.28.0.2
+    environment:
+      - ETCD_ADVERTISE_CLIENT_URLS=http://172.28.0.2:2379
+      - ETCD_LISTEN_CLIENT_URLS=http://172.28.0.2:2379
 
