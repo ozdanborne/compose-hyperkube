@@ -1,0 +1,11 @@
+version: '3'
+services:
+  apiserver:
+    image:
+      gcr.io/google_containers/hyperkube-amd64:v1.7.0
+    command:
+      - "/hyperkube"
+      - "apiserver"
+      - "--etcd-servers=http://127.0.0.1:2379"
+      - "--service-cluster-ip-range=10.101.0.0/16"
+
